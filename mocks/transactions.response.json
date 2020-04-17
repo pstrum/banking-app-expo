@@ -1,0 +1,65 @@
+[
+  {
+    "amount": -10.2,
+    "date": 1583266558054,
+    "category": "food"
+  },
+  {
+    "amount": -10.41,
+    "date": 1583267595958,
+    "category": "bills"
+  },
+  {
+    "amount": -24.0,
+    "date": 1583266558054,
+    "category": "food"
+  },
+  {
+    "amount": -40.13,
+    "date": 1583267695958,
+    "category": "bills"
+  },
+  {
+    "amount": -2.98,
+    "date": 1583267695958,
+    "category": "other"
+  },
+  {
+    "amount": -14.3,
+    "date": 1583267495958,
+    "category": "other"
+  },
+  {
+    "amount": -19.0,
+    "date": 1583267496958,
+    "category": "food"
+  },
+  {
+    "amount": -19.0,
+    "date": 1583157705958,
+    "category": "entertainment"
+  },
+
+  {
+    "amount": -14.0,
+    "date": 1583266558054,
+    "category": "entertainment"
+  },
+
+  {
+    "amount": -1.0,
+    "date": 1583266558054,
+    "category": "entertainment"
+  },
+
+  {
+    "amount": 219.0,
+    "date": 1583266558054,
+    "category": "direct deposit"
+  },
+  {
+    "amount": 390.0,
+    "date": 1583157705958,
+    "category": "direct deposit"
+  }
+]
