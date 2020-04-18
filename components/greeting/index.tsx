@@ -11,11 +11,12 @@ const Greeting = () => {
 
 const styles = StyleSheet.create({
   baseText: {
-    fontFamily: 'Cochin',
+    fontFamily: 'Arial',
   },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff',
   },
 });
 
