@@ -1,73 +1,57 @@
 import React from 'react';
-import { Button, StyleSheet, StatusBar, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { Button } from 'react-native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { connect, Provider } from 'react-redux';
-import store from './redux/store';
+import { Provider } from 'react-redux';
+import configureStore from './redux/store';
 
-// import { UserService } from './services/user.service';
-import Greeting from './components/greeting';
-import Transactions from './components/transactions';
-import user from './redux/reducers/user';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './theme/global-styles';
+import { theme } from './theme/theme';
 
-function AccountScreen() {
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle={'light-content'} />
-      <Greeting />
-      <Transactions />
-    </View>
-  );
-}
+import AccountScreen from './screens/account';
+import SettingsScreen from './screens/settings';
 
-function SettingsScreen() {
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle={'light-content'} />
-      <Text>Settings</Text>
-    </View>
-  );
-}
-
+const store = configureStore();
 const Stack = createStackNavigator();
 
-export default function App() {
+function App() {
+  return (
+    <NavigationContainer theme={DarkTheme}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Account"
+          component={AccountScreen}
+          options={({ navigation }) => ({
+            headerStyle: {
+              backgroundColor: '#000',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerRight: () => (
+              <Button
+                onPress={() => navigation.navigate('Settings')}
+                title="Settings"
+                color="#000"
+              />
+            ),
+          })}
+        />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default function Root() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Account"
-            component={AccountScreen}
-            options={({ navigation }) => ({
-              headerStyle: {
-                backgroundColor: '#000',
-              },
-              headerTitleStyle: {
-                color: '#fff',
-              },
-              headerRight: () => (
-                <Button
-                  onPress={() => navigation.navigate('Settings')}
-                  title="Settings"
-                  color="#000"
-                />
-              ),
-            })}
-          />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 48,
-    paddingLeft: 24,
-    backgroundColor: '#000',
-  },
-});
