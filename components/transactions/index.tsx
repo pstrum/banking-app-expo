@@ -1,50 +1,59 @@
 import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
-import Constants from 'expo-constants';
-import { AccountViewModel } from '../../models/view/account-view-model';
+import { SafeAreaView, View, FlatList, Text } from 'react-native';
+import { transaction } from '../../models/transaction';
+import styled from 'styled-components';
 
-interface transaction {
-  name: string;
-  amount: number;
-}
+const StyledText = styled(Text)`
+  margin-right: 1rem;
+  color: ${(props) => props.theme.color.base.default};
+`;
 
-function Transaction({ name, amount }: transaction) {
+const StyledTransaction = styled(View)`
+  display: flex;
+  flex-direction: row;
+`;
+
+const StyledAmount = styled(Text)`
+  flex-grow: 1;
+  color: ${(props) => props.theme.color.base.default};
+  text-align: right;
+`;
+
+const StyledH2 = styled.h2`
+  font-size: 1.625rem;
+  color: ${(props) => props.theme.color.base.default};
+`;
+
+const Transaction = ({ category, date, amount }: transaction) => {
+  // This logic could be done somewhere higher up. Typically I would put this
+  // on a View Model, so maybe in the Action using Redux.
+  function transformDate(date: number): string {
+    return new Intl.DateTimeFormat('en-US').format(date);
+  }
+
   return (
-    <View style={styles.transaction}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.amount}>${amount}</Text>
-    </View>
+    <StyledTransaction>
+      <StyledText>{transformDate(date)}</StyledText>
+      <StyledText>{category}</StyledText>
+      <StyledAmount>${amount.toFixed(2)}</StyledAmount>
+    </StyledTransaction>
   );
-}
+};
 
-export default function Transactions() {
+export const Transactions = ({ items }: any) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
+      <StyledH2>Transactions</StyledH2>
       <FlatList
-        data={[{ name: 'peter', amount: 23.5 }]}
+        data={items}
         renderItem={({ item }) => (
-          <Transaction name={item.name} amount={item.amount} />
+          <Transaction
+            category={item.category}
+            amount={item.amount}
+            date={item.date}
+          />
         )}
       />
     </SafeAreaView>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
-  transaction: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  name: {
-    color: '#fff',
-  },
-  amount: {
-    color: '#fff',
-  },
-});
+};
